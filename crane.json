@@ -1,0 +1,15 @@
+{
+    "containers": [
+        {
+            "name": "redis",
+            "dockerfile": ".",
+            "image": "damm/redis",
+            "run": {
+                "detach": true,
+                "privileged": true,
+                "publish": ["6379:6379"],
+                "env": ["ES_MIN_MEM=1g","ES_MAX_MEM=1g"]
+            }
+        }
+    ]
+}

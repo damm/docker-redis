@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+ulimit -Hn 10032
+ulimit -Sn 10032
+sysctl vm.overcommit_memory=1
+su - redis -c '/usr/local/bin/redis-server /etc/redis/redis.conf'

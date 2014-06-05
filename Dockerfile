@@ -3,11 +3,13 @@ MAINTAINER <scott@likens.us>
 RUN apt-get update
 RUN apt-get install wget -y
 RUN apt-get install build-essential -y
-RUN wget http://download.redis.io/releases/redis-2.8.8.tar.gz -O /tmp/redis-2.8.8.tar.gz && cd /tmp;tar zxf redis-2.8.8.tar.gz
-WORKDIR /tmp/redis-2.8.8
-RUN make && make install
+ENV VERSION 2.8.9
+RUN wget http://download.redis.io/releases/redis-${VERSION}.tar.gz -O /tmp/redis-${VERSION}.tar.gz && cd /tmp;tar zxf redis-${VERSION}.tar.gz
+RUN cd /tmp/redis-${VERSION};make && make install
 RUN mkdir /etc/redis && mkdir -p /data/
 ADD redis.conf /etc/redis/redis.conf
+ADD run /run
+RUN chmod +x /run
+RUN useradd -m redis
 EXPOSE 6379
-ENTRYPOINT ["/usr/local/bin/redis-server","/etc/redis/redis.conf"]
-VOLUME ["/data/"]
+ENTRYPOINT ["/run"]
