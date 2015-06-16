@@ -8,8 +8,8 @@ RUN wget http://download.redis.io/releases/redis-${VERSION}.tar.gz -O /tmp/redis
 RUN cd /tmp/redis-${VERSION};make && make install
 RUN mkdir /etc/redis && mkdir -p /data/
 ADD redis.conf /etc/redis/redis.conf
-ADD run /run
-RUN chmod +x /run
+ADD run /run.sh
+RUN chmod +x /run.sh
 RUN useradd -m redis
 EXPOSE 6379
-ENTRYPOINT ["/run"]
+ENTRYPOINT ["/run.sh"]
